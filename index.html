@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Meu primeiro projeto</title>
 </head>
+
   <body>
   <h1>Calculadora elétrica</h1>
   <p>Descubra a corrente de uma carga usando potência e tensão.</p>
@@ -14,7 +15,25 @@
   <label for="tensao">Tensão (V):</label>
   <input id="tensao" type="number">
 
-  <button>Calcular corrente</button>
-  <p id="resultado">O resultado aparecerá aqui.</p>
+<button id="calcular">Calcular corrente</button>
+<p id="resultado">O resultado aparecerá aqui.</p>
+
+<script>
+  const botao = document.getElementById("calcular");
+
+  botao.addEventListener("click", function () {
+    const potencia = Number(document.getElementById("potencia").value);
+    const tensao = Number(document.getElementById("tensao").value);
+    const resultado = document.getElementById("resultado");
+
+    if (potencia <= 0 || tensao <= 0) {
+      resultado.textContent = "Digite potência e tensão maiores que zero.";
+      return;
+    }
+
+    const corrente = potencia / tensao;
+    resultado.textContent = `Corrente: ${corrente.toFixed(2)} A`;
+  });
+</script>
 </body>
 </html>
