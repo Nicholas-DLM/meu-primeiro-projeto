@@ -15,6 +15,8 @@
 
   <label for="tensao">Tensão (V):</label>
   <input id="tensao" type="number">
+  <label for="fatorPotencia">Fator de potência (0 a 1):</label>
+<input id="fatorPotencia" type="number" min="0.01" max="1" step="0.01" value="1">
 
 <button id="calcular">Calcular corrente</button>
 <p id="resultado">O resultado aparecerá aqui.</p>
@@ -25,15 +27,17 @@
   botao.addEventListener("click", function () {
     const potencia = Number(document.getElementById("potencia").value);
     const tensao = Number(document.getElementById("tensao").value);
+    const fatorPotencia = Number(document.getElementById("fatorPotencia").value);
     const resultado = document.getElementById("resultado");
 
-    if (potencia <= 0 || tensao <= 0) {
-      resultado.textContent = "Digite potência e tensão maiores que zero.";
+    if (potencia <= 0 || tensao <= 0 || fatorPotencia <= 0 || fatorPotencia > 1) {
+      resultado.textContent = "Digite potência e tensão maiores que zero e fator de potência entre 0 e 1.";
       return;
     }
 
-    const corrente = potencia / tensao;
-    resultado.textContent = `Corrente: ${corrente.toFixed(2)} A (I = ${potencia} W ÷ ${tensao} V)`;  });
+    const corrente = potencia / (tensao * fatorPotencia);
+    resultado.textContent = `Corrente: ${corrente.toFixed(2)} A (I = ${potencia} W ÷ (${tensao} V × ${fatorPotencia}))`;
+  });
 </script>
 </body>
 </html>
