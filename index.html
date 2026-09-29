@@ -19,10 +19,12 @@
 <input id="fatorPotencia" type="number" min="0.01" max="1" step="0.01" value="1">
 
 <button id="calcular">Calcular corrente</button>
+<button id="limpar">Limpar</button>
 <p id="resultado">O resultado aparecerá aqui.</p>
 
 <script>
   const botao = document.getElementById("calcular");
+  const botaoLimpar = document.getElementById("limpar");
 
   botao.addEventListener("click", function () {
     const potencia = Number(document.getElementById("potencia").value);
@@ -38,6 +40,12 @@
     const corrente = potencia / (tensao * fatorPotencia);
     resultado.textContent = `Corrente: ${corrente.toFixed(2)} A (I = ${potencia} W ÷ (${tensao} V × ${fatorPotencia}))`;
   });
+  botaoLimpar.addEventListener("click", function () {
+  document.getElementById("potencia").value = "";
+  document.getElementById("tensao").value = "";
+  document.getElementById("fatorPotencia").value = "1";
+  document.getElementById("resultado").textContent = "O resultado aparecerá aqui.";
+});
 </script>
 </body>
 </html>
