@@ -8,7 +8,15 @@
 
   <body>
   <h1>Calculadora elétrica</h1>
+
   <p>Descubra a corrente de uma carga usando potência e tensão.</p>
+    <label for="tipoCircuito">Tipo de circuito:</label>
+    <select id="tipoCircuito">
+      <option value="monofasico">Monofásico (fase-neutro)</option>
+      <option value="bifasico">Bifásico (carga entre duas fases)</option>
+      <option value="trifasico">Trifásico equilibrado (tensão entre fases)</option>
+    </select>
+    <p>No modo trifásico, informe a tensão entre fases.</p>
 
   <label for="potencia">Potência (W):</label>
   <input id="potencia" type="number">
@@ -30,6 +38,7 @@
     const potencia = Number(document.getElementById("potencia").value);
     const tensao = Number(document.getElementById("tensao").value);
     const fatorPotencia = Number(document.getElementById("fatorPotencia").value);
+    const tipoCircuito = document.getElementById("tipoCircuito").value;
     const resultado = document.getElementById("resultado");
 
     if (potencia <= 0 || tensao <= 0 || fatorPotencia <= 0 || fatorPotencia > 1) {
@@ -37,13 +46,25 @@
       return;
     }
 
-    const corrente = potencia / (tensao * fatorPotencia);
-    resultado.textContent = `Corrente: ${corrente.toFixed(2)} A (I = ${potencia} W ÷ (${tensao} V × ${fatorPotencia}))`;
+    let corrente;
+let formula;
+
+if (tipoCircuito === "trifasico") {
+  corrente = potencia / (Math.sqrt(3) * tensao * fatorPotencia);
+  formula = `I = ${potencia} W / (√3 × ${tensao} V × ${fatorPotencia})`;
+} else {
+  corrente = potencia / (tensao * fatorPotencia);
+  formula = `I = ${potencia} W / (${tensao} V × ${fatorPotencia})`;
+}
+
+resultado.textContent = `Corrente: ${corrente.toFixed(2)} A (${formula})`;
   });
+
   botaoLimpar.addEventListener("click", function () {
   document.getElementById("potencia").value = "";
   document.getElementById("tensao").value = "";
   document.getElementById("fatorPotencia").value = "1";
+  document.getElementById("tipoCircuito").value = "monofasico";
   document.getElementById("resultado").textContent = "O resultado aparecerá aqui.";
 });
 </script>
